@@ -21,5 +21,5 @@ then
     rm link.txt
 fi
 
-wget  -b -q -i text.txt # -P "$HOME/csvfiles/"
+wget  -b -q -i text.txt# -P "$HOME/csvfiles/"
 rm text.txt
