@@ -1,10 +1,10 @@
 #!/bin/bash
 
-phrase="$1"
-max_pages=$2
-url="https://www.istockphoto.com/pl/search/2/image?phrase=$phrase&page=1" 
-curl -s $url | awk -F 'href="' '/<a/{gsub(/".*/, "", $2); print $2}'  # lista linkow 
-
+# phrase="$1"
+# max_pages=$2
+url="https://pixabay.com/images/search/tree/?order=ec&pagi=2" 
+# curl -s $url | awk -F 'href="' '/<a/{gsub(/".*/, "", $2); print $2}'  # lista linkow 
+curl -s $url
 
 # potem trzeba zapisac do pliku
 
