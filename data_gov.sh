@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -n $1 ]
+if [ -z $1 ]
 then
     files_count=10
 else
@@ -12,11 +12,14 @@ curl -s $url | egrep --color "href=.*?accessType=DOWNLOAD" | grep "csv" | cut -d
 while [ $(cat link.txt | wc -l) -lt $files_count ]
 do
     ((page++))
-    url="https://catalog.data.gov/dataset/?q=&sort=views_recent+desc&page=$page"
+    url="https://catalog.data.gov/dataset/?q=&sort=views_recent+desc&page=$page"  # scrape filenames1
     curl -s $url | egrep --color "href=.*?accessType=DOWNLOAD" | grep "csv" | cut -d "=" -f2 | sed 's/"//' >> link.txt
 done
 if [ $(cat link.txt | wc -l) -gt $files_count ]
 then
-    links=$(awk -v count=$files_count 'NR <= count' link.txt)
-    echo $links > link.txt
+    cat link.txt | head -n $files_count > text.txt
+    rm link.txt
 fi
+
+wget  -b -q -i text.txt # -P "$HOME/csvfiles/"
+rm text.txt
