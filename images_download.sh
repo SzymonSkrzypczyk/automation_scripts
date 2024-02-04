@@ -33,7 +33,7 @@ do
 done< <(curl --request GET \
 	--url $url \
 	--header 'X-RapidAPI-Host: free-images-api.p.rapidapi.com' \
-	--header 'X-RapidAPI-Key: 017fa9b49cmsh1614af302384761p19fed5jsn61510ee174cf' \
+	--header 'X-RapidAPI-Key: ###' \ # enter your key
     -s | jq '.results[].download' | sed 's/"//g')
 
 # wget -b -c -i links.txt
