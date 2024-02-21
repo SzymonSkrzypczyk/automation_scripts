@@ -1,6 +1,6 @@
 #!/bin/bash
 
-which -s identify
+which -s magick
 if [ $? -ne 0 ]
 then
     # apt install imagemagick || brew install imagemagick
@@ -14,8 +14,23 @@ then
     exit 1
 fi
 
+size=$3
+
+if [ -n $size ]
+then
+    size=64
+fi
+
 target_dir="$1"
 output_dir="$2"
-
-images=$(find "$target_dir" -type f -exec sh -c 'file "{}" | grep -q "image" && echo "{}"' \;)
-echo $images
+# find "$target_dir" -type f -exec sh -c 'file "{}" | grep "image" && echo "{}"' \;
+for i in $(find "$target_dir" -type f)
+do
+    file "$i" | grep "image" &> /dev/null
+    if [ $? -eq 0 ]
+    then
+        filename=$(basename -- "$i")
+        # extension="${filename##*.}"
+        magick "$i" -resize $size"x"$size "$output_dir/$filename"
+    fi
+done
